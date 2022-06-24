@@ -1,0 +1,53 @@
+<template>
+  <div class="home">
+    <div @click="$bb_api.getF()">get aaaaaaaaaaaaaaaaa</div>
+    <div @click="$bb_api.get1F()">get1 aaaaaaaaaaaaaaaaa</div>
+    <div @click="$bb_api.postF()">post aaaaaaaaaaaaaaaaa</div>
+    <div @click="$bb_api.putF()">put aaaaaaaaaaaaaaaaa</div>
+    <div @click="$bb_api.patchF()">patch aaaaaaaaaaaaaaaaa</div>
+    <div @click="$bb_api.deleteF()">delete aaaaaaaaaaaaaaaaa</div>
+    <img alt="Vue logo" src="../assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  </div>
+</template>
+
+<script>
+//import Axios from 'axios'
+// @ is an alias to /src
+import HelloWorld from '@/components/HelloWorld.vue'
+
+export default {
+  name: 'Home',
+  components: {
+    HelloWorld
+  },
+  data() {
+    return {
+      test:'aaa'
+    }
+  },
+  methods: {
+    testF(){
+      this.$bb_api.test({'aaa':123,'bbb':'bbb'});
+      /*this.$bb_api.test({'aaa':123,'bbb':'bbb'}).then(res=>{
+        if(res['aaa']){}
+      });*/
+    }
+  },
+  mounted() {
+    /*Axios.get('http://127.0.0.1:3000').then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });*/
+  }
+}
+</script>
+<style lang="scss" scoped>
+.home{
+  div{
+    margin:20px;
+    border:solid 1px #000;
+  }
+}
+</style>
