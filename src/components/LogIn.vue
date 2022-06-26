@@ -5,7 +5,7 @@
       <table>
         <tr>
           <td>帐号:</td>
-          <td><input type="text" v-model="accounts" placeholder="6 到 16个英文字母 或 数字" pattern="^[a-zA-Z0-9|@]{6,16}$" required></td>
+          <td><input type="text" v-model="accounts" placeholder="请输入邮箱地址" pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required></td>
         </tr>
         <tr>
           <td>密码:</td>
@@ -25,7 +25,8 @@
       </form>
       <table>
         <tr>
-          <td>注册</td>
+          <td @click="logInToken()">logInToken</td>
+          <td @click="logOn()">注册</td>
           <td>修改密码</td>
         </tr>
       </table>
@@ -47,19 +48,30 @@ export default {
     }
   },
   methods: {
+    //注册
+    logOn(){
+      this.$bb_api.logOn(this.$bb_local,{'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
+        //this.show = false;
+        console.log(res);
+      });
+    },
     //登陆
     logIn(){
-      this.password = this.$bb_encrypt.en(this.password);
-      this.$bb_api.logIn({'accounts':this.accounts,'password':this.password}).then(res=>{
-        this.show = false;
+      this.$bb_api.logIn(this.$bb_local,{'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
+        //this.show = false;
+        console.log(res);
+      });
+    },
+    logInToken(){
+      this.$bb_api.logInToken(this.$bb_local).then(res=>{
         console.log(res);
       });
     },
     //登出
     logOut(){
-      /*this.$bb_api.logOut({'accounts':this.accounts}).then(res=>{
+      this.$bb_api.logOut({'accounts':this.accounts}).then(res=>{
         console.log(res);
-      });*/
+      });
     }
   },
   mounted() {}

@@ -5,8 +5,8 @@ class Base64 {
     en(input) {
         if(!input){console.error('请传入要加密的值'); return ;}
         let secret_key = (0|Date.now()/1000/60/60);
-        input += secret_key-((0|secret_key/100)*100);
-        let output = "";
+        input = secret_key-((0|secret_key/100)*100)+input;
+        let output = this._keyStr.charAt(Math.floor(Math.random() * this._keyStr.length));
         let chr1, chr2, chr3, enc1, enc2, enc3, enc4;
         let i = 0;
         input = this._utf8_encode(input);
@@ -27,33 +27,6 @@ class Base64 {
                 this._keyStr.charAt(enc1) + this._keyStr.charAt(enc2) +
                 this._keyStr.charAt(enc3) + this._keyStr.charAt(enc4);
         }
-        return output;
-    }
-    // public method for decoding
-    de(input) {
-        if(!input){console.error('请传入要加密的值'); return ;}
-        let output = "";
-        let chr1, chr2, chr3;
-        let enc1, enc2, enc3, enc4;
-        let i = 0;
-        input = input.replace(/[^A-Za-z0-9+\/=]/g, "");
-        while (i < input.length) {
-            enc1 = this._keyStr.indexOf(input.charAt(i++));
-            enc2 = this._keyStr.indexOf(input.charAt(i++));
-            enc3 = this._keyStr.indexOf(input.charAt(i++));
-            enc4 = this._keyStr.indexOf(input.charAt(i++));
-            chr1 = (enc1 << 2) | (enc2 >> 4);
-            chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-            chr3 = ((enc3 & 3) << 6) | enc4;
-            output = output + String.fromCharCode(chr1);
-            if (enc3 !== 64) {
-                output = output + String.fromCharCode(chr2);
-            }
-            if (enc4 !== 64) {
-                output = output + String.fromCharCode(chr3);
-            }
-        }
-        output = this._utf8_decode(output);
         return output;
     }
     // private method for UTF-8 encoding

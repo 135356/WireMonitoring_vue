@@ -16,7 +16,7 @@ class Local {
     }
 
     /*创建本地缓存*/
-    createLocal_(name, data, time) {
+    createLocal(name, data, time) {
         switch (Object.prototype.toString.call(data)) {
             case '[object Object]':
                 data = JSON.stringify(data);//对象
@@ -32,7 +32,7 @@ class Local {
     }
 
     /*在原数据基础上从后面追加,time为秒*/
-    addLocal_(name, data, time) {
+    addLocal(name, data, time) {
         switch (Object.prototype.toString.call(data)) {
             case '[object Object]':
                 data = JSON.stringify(data);
@@ -56,7 +56,7 @@ class Local {
         }
     }
 
-    getLocal_(name, id) {
+    getLocal(name, id) {
         let time = localStorage.getItem(this.name_ + 'time' + name);
         if (time && parseInt(time) < (Date.now()/1000)) {
             this.deleteLocal_(name);
@@ -92,7 +92,7 @@ class Local {
         }
     }
 
-    deleteLocal_(name, id) {
+    deleteLocal(name, id) {
         let data = localStorage.getItem(this.name_ + name);
         if (data) {
             if (id&&Object.prototype.toString.call(id) === '[object Number]') {
