@@ -1,7 +1,10 @@
 import Ajax from "./index";
+import Local from '@/libs/js_vue/src/local'
 
 class Api{
-    test(data){
+    bb_local=new Local();
+
+    /*test(data){
         return new Promise((resolve)=> {
             Ajax.get('/a1_get',{
                 'aaa': 123,
@@ -34,9 +37,9 @@ class Api{
                 console.log('delete',res);
             });
         });
-    }
+    }*/
     //注册
-    logOn($bb_local,data){
+    logOn(data){
         return new Promise((resolve)=> {
             Ajax.post('/logOn',data).then(res=>{
                 resolve(res);
@@ -45,12 +48,29 @@ class Api{
             });
         });
     }
+    //修改密码
+    changePassword(data){
+        return new Promise((resolve)=> {
+            Ajax.post('/changePassword',data).then(res=>{
+                resolve(res);
+            }).catch(err => {
+                console.error(err);
+            });
+        });
+    }
     //登陆
-    logIn($bb_local,data){
+    logIn(data){
         return new Promise((resolve)=> {
             Ajax.post('/logIn',data).then(res=>{
-                $bb_local.createLocal("token",res["data"]["token"]);
-                $bb_local.createLocal("token_1",res["data"]["token_1"]);
+                if(res["data"]["state"] === 0){
+                    this.bb_local.createLocal("accounts",data["accounts"]);
+                    this.bb_local.createLocal("token",res["data"]["token"]);
+                    this.bb_local.createLocal("token_1",res["data"]["token_1"]);
+                }else{
+                    this.bb_local.createLocal("accounts",'');
+                    this.bb_local.createLocal("token",-1);
+                    this.bb_local.createLocal("token_1",-1);
+                }
                 resolve(res);
             }).catch(err => {
                 console.error(err);
@@ -58,25 +78,34 @@ class Api{
         });
     }
     //token登陆
-    logInToken($bb_local){
+    logInToken(){
         return new Promise((resolve)=> {
-            Ajax.post('/logInToken', {'token':$bb_local.getLocal("token"),'token_1':$bb_local.getLocal("token_1")}).then(res=>{
-                resolve(res);
-            }).catch(err => {
-                console.error(err);
-            });
+            let token = parseInt(this.bb_local.getLocal("token"));
+            if(!token || token === -1){
+                resolve({"data":{"state":-1000}});
+            }else{
+                Ajax.post('/logInToken', {'accounts':this.bb_local.getLocal("accounts"),'token':this.bb_local.getLocal("token"),'token_1':this.bb_local.getLocal("token_1")}).then(res=>{
+                    resolve(res);
+                }).catch(err => {
+                    console.error(err);
+                });
+            }
         });
     }
     //登出
-    logOut(data){
+    logOut(){
         return new Promise((resolve)=> {
-            Ajax.post('/logOut',data).then(res=>{
+            Ajax.post('/logOut', {'accounts':this.bb_local.getLocal("accounts"),'token':this.bb_local.getLocal("token"),'token_1':this.bb_local.getLocal("token_1")}).then(res=>{
                 resolve(res);
             }).catch(err => {
                 console.error(err);
             });
+            this.bb_local.deleteLocal("accounts");
+            this.bb_local.deleteLocal("token");
+            this.bb_local.deleteLocal("token_1");
         });
     }
+
 }
 
 export default Api;

@@ -1,3 +1,5 @@
+import store from '@/store'
+
 class Ccc {
     constructor() {
     }
@@ -15,10 +17,12 @@ class Ccc {
         return false;
     }
 
-    tips(msg)
-    {
-        setTimeout(()=>{
-        }, 1600);
+    /*弹框*/
+    alert(text,time){
+        if(time){
+            text={'text':text,'time':time};
+        }
+        store.dispatch('alertA', text);
     }
 }
 
