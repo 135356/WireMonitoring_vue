@@ -31,8 +31,8 @@
           </table>
           <div class="a22">
             <button v-if="is_log_in" class="button">登陆</button>
-            <button v-if="is_log_on" class="button">注册</button>
-            <button v-if="is_change_password" class="button">修改密码</button>
+            <button v-if="is_log_on" class="button" style="background:#00aa00;">注册</button>
+            <button v-if="is_change_password" class="button" style="background:#2c3e50;">修改密码</button>
           </div>
         </div>
       </form>
@@ -90,7 +90,8 @@ export default {
     logOn(){
       this.$bb_api.logOn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
         if(res["data"]["state"] === 0){
-          this.show = false;
+          this.show = true;
+          this.$bb.alert('注册成功请登陆', 5000);
         }else{
           this.$bb.alert(res["data"]["msg"], 5000);
         }

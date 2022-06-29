@@ -4,6 +4,7 @@ class AxiosObj {
     axios;
     api_url = '/test'; //api交互链接
     asset_url = 'http://a1.a/'; //静态资产链接
+    dev_env_=process.env.NODE_ENV === 'development'; //是否开发环境
     constructor() {
         /*this.axios = Axios.create({
             baseURL: this.api_url,
@@ -15,7 +16,7 @@ class AxiosObj {
             }],
         });*/
         this.axios = Axios.create({
-            baseURL: this.api_url,
+            baseURL: this.dev_env_?this.api_url:'',
             timeout: 30000, //设置超时时间
             responseType: 'json', //返回数据类型,默认也是json
         });
