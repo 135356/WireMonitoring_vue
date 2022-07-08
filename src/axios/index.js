@@ -23,12 +23,15 @@ class AxiosObj {
     }
 
     get(path,data){
-        return this.axios.get(path, {
+        /*return this.axios({
+            method: 'get',
+            url: path,
             params: data
-        });
+        });*/
+        return this.axios.get(path,{params:data});
     }
-    post(path,data){
-        return this.axios.post(path,data);
+    post(path,data,headers){
+        return this.axios.post(path,data,headers);
     }
     put(path,data){
         return this.axios.put(path,data);

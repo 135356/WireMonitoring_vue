@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LogIn></LogIn>
+    <LogIn v-if="!is_log_in"></LogIn>
     <router-view v-if="is_log_in" />
     <div v-if="alert" @click="closeAlert()" id="alert">
       <div class="b1">{{alert}}</div>
@@ -24,10 +24,10 @@ export default {
     /*监听弹框*/
     alert()
     {
-      return this.$store.state.data_api.alert
+      return this.$store.state.data_api.alert;
     },
     is_log_in(){
-      return this.$store.state.data_api.is_log_in
+      return this.$store.state.data_api.is_log_in;
     }
   },
   methods:{

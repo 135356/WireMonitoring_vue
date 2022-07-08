@@ -3,7 +3,6 @@ import Local from '@/libs/js_vue/src/local'
 
 class Api{
     bb_local=new Local();
-
     /*test(data){
         return new Promise((resolve)=> {
             Ajax.get('/a1_get',{
@@ -38,6 +37,32 @@ class Api{
             });
         });
     }*/
+    //上传
+    uploadMedia(){
+        return new Promise((resolve)=> {
+            let file = event.target.files[0];
+            //let form_data = new FormData(); //建立form对象
+            //form_data.append('img',file,file.name);
+            let token = this.bb_local.getLocal("token");
+            if(!token || token === "undefined"){
+                resolve({"data":{"state":-1000}});
+            }else{
+                Ajax.post('/file',file,{
+                    headers:{
+                        'content-type':'multipart/form-data',
+                        'accounts_id':this.bb_local.getLocal("accounts"),
+                        'accounts_token':token,
+                        'file_name':file.name,
+                    }
+                }).then(res=>{
+                    console.log(res);
+                    resolve(res);
+                }).catch(err => {
+                    console.error(err);
+                });
+            }
+        });
+    }
     //注册
     logOn(data){
         return new Promise((resolve)=> {
@@ -51,11 +76,16 @@ class Api{
     //修改密码
     changePassword(data){
         return new Promise((resolve)=> {
-            Ajax.post('/changePassword',data).then(res=>{
-                resolve(res);
-            }).catch(err => {
-                console.error(err);
-            });
+            data["token"] = this.bb_local.getLocal("token");
+            if(!data["token"]){
+                resolve({"data":{"state":-1000}});
+            }else{
+                Ajax.post('/change_password',data).then(res=>{
+                    resolve(res);
+                }).catch(err => {
+                    console.error(err);
+                });
+            }
         });
     }
     //登陆
@@ -65,11 +95,9 @@ class Api{
                 if(res["data"]["state"] === 0){
                     this.bb_local.createLocal("accounts",data["accounts"]);
                     this.bb_local.createLocal("token",res["data"]["token"]);
-                    this.bb_local.createLocal("token_1",res["data"]["token_1"]);
                 }else{
-                    this.bb_local.createLocal("accounts",'');
-                    this.bb_local.createLocal("token",-1);
-                    this.bb_local.createLocal("token_1",-1);
+                    this.bb_local.deleteLocal("accounts");
+                    this.bb_local.deleteLocal("token");
                 }
                 resolve(res);
             }).catch(err => {
@@ -80,11 +108,11 @@ class Api{
     //token登陆
     logInToken(){
         return new Promise((resolve)=> {
-            let token = parseInt(this.bb_local.getLocal("token"));
-            if(!token || token === -1){
+            let token = this.bb_local.getLocal("token");
+            if(!token){
                 resolve({"data":{"state":-1000}});
             }else{
-                Ajax.post('/logInToken', {'accounts':this.bb_local.getLocal("accounts"),'token':this.bb_local.getLocal("token"),'token_1':this.bb_local.getLocal("token_1")}).then(res=>{
+                Ajax.post('/logIn_Token', {'accounts':this.bb_local.getLocal("accounts"),'token':token}).then(res=>{
                     resolve(res);
                 }).catch(err => {
                     console.error(err);
@@ -95,14 +123,13 @@ class Api{
     //登出
     logOut(){
         return new Promise((resolve)=> {
-            Ajax.post('/logOut', {'accounts':this.bb_local.getLocal("accounts"),'token':this.bb_local.getLocal("token"),'token_1':this.bb_local.getLocal("token_1")}).then(res=>{
+            Ajax.post('/logOut', {'accounts':this.bb_local.getLocal("accounts"),'token':this.bb_local.getLocal("token")}).then(res=>{
                 resolve(res);
             }).catch(err => {
                 console.error(err);
             });
             this.bb_local.deleteLocal("accounts");
             this.bb_local.deleteLocal("token");
-            this.bb_local.deleteLocal("token_1");
         });
     }
 

@@ -59,7 +59,7 @@ class Local {
     getLocal(name, id) {
         let time = localStorage.getItem(this.name_ + 'time' + name);
         if (time && parseInt(time) < (Date.now()/1000)) {
-            this.deleteLocal_(name);
+            this.deleteLocal(name);
             return '';
         } else {
             let data = localStorage.getItem(this.name_ + name);

@@ -14,6 +14,10 @@
     <div v-if="is_construction_management" class="c_ConstructionManagement">
       <ConstructionManagement></ConstructionManagement>
     </div>
+    <div>
+<!--       accept="image/*"<input id="imgFile" type="file" @change="img.addF()"/>-->
+      <input type="file" @change="img.addF()" />
+    </div>
   </div>
 </template>
 
@@ -31,6 +35,15 @@ export default {
     return {
       is_video_management:false,
       is_construction_management:false,
+      img:{
+        file:[],
+        addF:()=> {
+          this.$bb_api.uploadMedia(1).then(res => {
+            //console.log(res);
+            //this.img.file.push(res.address);
+          });
+        }
+      }
     }
   },
   methods: {
@@ -43,7 +56,9 @@ export default {
       this.is_construction_management=true;
     }
   },
-  mounted() {}
+  mounted() {
+
+  }
 }
 </script>
 <style lang="scss" scoped>
