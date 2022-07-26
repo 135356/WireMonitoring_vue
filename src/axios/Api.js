@@ -3,60 +3,60 @@ import Local from '@/libs/js_vue/src/local'
 
 class Api{
     bb_local=new Local();
-    /*test(data){
-        return new Promise((resolve)=> {
-            Ajax.get('/a1_get',{
-                'aaa': 123,
-                'bbb': 'bbb',
-            }).then(res=>{
-                console.log('a1_get:',res);
-            });
-            Ajax.post('/a2_post',{
-                'aaa': 123,
-                'bbb': 'bbb',
-            }).then(res=>{
-                console.log('a2_post',res);
-            });
-            Ajax.put('/put',{
-                'aaa': 123,
-                'bbb': 'bbb',
-            }).then(res=>{
-                console.log('put',res);
-            });
-            Ajax.patch('/patch',{
-                'aaa': 123,
-                'bbb': 'bbb',
-            }).then(res=>{
-                console.log('patch',res);
-            });
-            Ajax.delete('/delete',{
-                'aaa': 123,
-                'bbb': 'bbb',
-            }).then(res=>{
-                console.log('delete',res);
-            });
-        });
-    }*/
-    //上传
+    //上传图片
     uploadMedia(){
         return new Promise((resolve)=> {
-            let file = event.target.files[0];
+            let file = event.target.files;
+            let createObjectURL = function(blob){
+                return window[window.webkitURL?'webkitURL':'URL']['createObjectURL'](blob);
+            };
+            if(file&&file[0]){
+                //resolve({'address':createObjectURL(file[0]),'code':1,'type':file[0]['type']});
+                let token = this.bb_local.getLocal("token");
+                if(!token || token === "undefined"){
+                    resolve({"data":{"state":-1000}});
+                }else{
+                    Ajax.post('/png_file?access_token='+token+'&accounts='+this.bb_local.getLocal("accounts")+'&file_name='+file[0]['name']+'&file_type='+file[0]['type'],
+                    file[0],
+                    {headers:{'content-type':'multipart/form-data'}}
+                    ).then(res=>{
+                        if(res["data"]["state"]==0){
+                            //上传成功之后服务器会生成一个新的文件名，拼接上token才能访问
+                            let path = '/'+res["data"]["file_path"]+'?request_type=download&access_token='+token;
+                            resolve({'address':path,'code':1,'type':file[0]['type']});
+                        }else{
+                            console.error(res["data"]["msg"]);
+                        }
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                }
+            }else{
+                resolve({'address':null,'code':0,'type':null});
+            }
+        });
+    }
+    //上传
+    uploadMedia2(){
+        return new Promise((resolve)=> {
+            let file = event.target.files;
             //let form_data = new FormData(); //建立form对象
             //form_data.append('img',file,file.name);
             let token = this.bb_local.getLocal("token");
             if(!token || token === "undefined"){
                 resolve({"data":{"state":-1000}});
             }else{
-                Ajax.post('/file',file,{
-                    headers:{
-                        'content-type':'multipart/form-data',
-                        'accounts_id':this.bb_local.getLocal("accounts"),
-                        'accounts_token':token,
-                        'file_name':file.name,
+                Ajax.post('/file?access_token='+token+'&accounts='+this.bb_local.getLocal("accounts")+'&file_name='+file[0]['name']+'&file_type='+file[0]['type'],
+                file[0],
+                {headers:{'content-type':'multipart/form-data'}}
+                ).then(res=>{
+                    if(res["data"]["state"]==0){
+                        //上传成功之后服务器会生成一个新的文件名，拼接上token才能访问
+                        let path = Ajax.asset_url+res["data"]["file_path"]+'?request_type=download&access_token='+token;
+                        resolve({'address':path,'code':1,'type':file[0]['type']});
+                    }else{
+                        console.error(res["data"]["msg"]);
                     }
-                }).then(res=>{
-                    console.log(res);
-                    resolve(res);
                 }).catch(err => {
                     console.error(err);
                 });

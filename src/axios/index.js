@@ -2,8 +2,8 @@ import Axios from 'axios'
 
 class AxiosObj {
     axios;
+    asset_url; //静态资产链接
     api_url = '/test'; //api交互链接
-    asset_url = 'http://a1.a/'; //静态资产链接
     dev_env_=process.env.NODE_ENV === 'development'; //是否开发环境
     constructor() {
         /*this.axios = Axios.create({
@@ -20,6 +20,7 @@ class AxiosObj {
             timeout: 30000, //设置超时时间
             responseType: 'json', //返回数据类型,默认也是json
         });
+        this.asset_url = this.dev_env_?'http://127.0.0.1/':'http://39.96.177.4/'
     }
 
     get(path,data){

@@ -8,12 +8,34 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta:{
+        keep_alive: true,
+    }
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta:{
+        keep_alive: false,
+    }
+  },
+  { //视频监控
+    path: '/VideoManagement',
+    name: 'VideoManagement',
+    component: () => import('../views/VideoManagement.vue'),
+    meta:{
+        keep_alive: false,
+    }
+  },
+  { //盾构施工管理
+    path: '/ConstructionManagement',
+    name: 'ConstructionManagement',
+    component: () => import('../views/ConstructionManagement.vue'),
+    meta:{
+        keep_alive: false,
+    }
   }
 ]
 

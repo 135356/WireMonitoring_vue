@@ -1,6 +1,6 @@
 <template>
   <div class="ConstructionManagement">
-    盾构施工管理
+    <h1>盾构施工管理</h1>
   </div>
 </template>
 
