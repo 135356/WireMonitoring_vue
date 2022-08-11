@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    首页
+    <h1>首页</h1>
   </div>
 </template>
 
@@ -19,5 +19,8 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
+  h1 {
+    margin: 10px;
+  }
 }
 </style>

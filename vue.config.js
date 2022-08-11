@@ -1,5 +1,5 @@
 module.exports = {
-    outputDir: 'wire_monitoring/', //输出文件目录dist
+    outputDir: 'dist/',
     publicPath: './',
     assetsDir: 'static', //静态资源文件目录
     productionSourceMap: false, //是否生成.map

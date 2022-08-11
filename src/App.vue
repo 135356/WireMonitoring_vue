@@ -65,7 +65,10 @@ export default {
   destroyed() {},
 };
 </script>
-<style lang="scss">
+<style>
+@import '@/assets/css/initialize.css';
+</style>
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

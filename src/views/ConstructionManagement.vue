@@ -6,10 +6,14 @@
 
 <script>
 export default {
-  name: "ConstructionManagement"
-}
+  name: "ConstructionManagement",
+};
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.ConstructionManagement {
+  h1 {
+    margin: 10px;
+  }
+}
 </style>

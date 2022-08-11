@@ -14,6 +14,20 @@
         </label>
       </div>
     </div>
+    <div class="video">
+      <video controls>
+        <source :src="camera.video" type="video/mp4">
+        您的浏览器不支持 video 标签。
+      </video>
+      <table>
+        <tr>
+          <td><div class="button" @click="camera.upF()">摄像头向上移动</div></td>
+          <td><div class="button" @click="camera.downF()">摄像头向下移动</div></td>
+          <td><div class="button" @click="camera.leftF()">摄像头向左移动</div></td>
+          <td><div class="button" @click="camera.rightF()">摄像头向右移动</div></td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -43,6 +57,34 @@ export default {
           }
         },
       },
+      camera: {
+        video:
+          "/test?request_type=download&access_token="+this.$bb_local.getLocal("token"), //视频信息
+        //摄像头向上移动
+        upF:()=>{
+          this.$bb_api.cameraUp().then((res) => {
+            console.log(res);
+          });
+        },
+        //摄像头向下移动
+        downF:()=>{
+          this.$bb_api.cameraDown().then((res) => {
+            console.log(res);
+          });
+        },
+        //摄像头向左移动
+        leftF:()=>{
+          this.$bb_api.cameraLeft().then((res) => {
+            console.log(res);
+          });
+        },
+        //摄像头向右移动
+        rightF:()=>{
+          this.$bb_api.cameraRight().then((res) => {
+            console.log(res);
+          });
+        },
+      },
     };
   },
 };
@@ -50,8 +92,8 @@ export default {
 
 <style lang="scss" scoped>
 .VideoManagement {
-  h1{
-    margin:10px;
+  h1 {
+    margin: 10px;
   }
   .add {
     position: relative;
@@ -88,11 +130,11 @@ export default {
         height: 60%;
         object-fit: cover;
       }
-      div{
-        height:40%;
+      div {
+        height: 40%;
         font-size: 8px;
-        color:#fff;
-        background:#000;
+        color: #fff;
+        background: #000;
       }
     }
 
@@ -128,6 +170,17 @@ export default {
   .add:after {
     content: "";
     width: 30%;
+  }
+  .video {
+    video {
+      width: 320px;
+      height: 240px;
+    }
+    .button {
+      margin: 10px;
+      padding: 5px;
+      border: solid 1px #f00;
+    }
   }
 }
 </style>
