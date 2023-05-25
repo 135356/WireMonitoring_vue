@@ -18,7 +18,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .home {
-  width: 100%;
+  width: 100vw;
+  height:100vh;
+  background-image: url(@/assets/img/admin-bg.355f213.jpg);
+  background-size: 100% 100%;
   h1 {
     margin: 10px;
   }

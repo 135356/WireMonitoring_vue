@@ -1,10 +1,21 @@
 <template>
   <div class="LogIn">
+    <div class="head">
+      <table>
+        <tr v-if="!show">
+          <td @click="logOut()">登出</td>
+          <td @click="isChangePassword()">修改密码</td>
+        </tr>
+        <tr v-if="show">
+          <td @click="isLogOn()">注册</td>
+          <td @click="isLogIn()">登陆</td>
+        </tr>
+      </table>
+    </div>
     <div class="content" v-if="show">
       <form @submit.prevent="isMethod()">
         <div class="a2">
           <table class="a21">
-            <caption>用户登陆</caption>
             <tr>
               <td>帐号:</td>
               <td><input type="text" v-model="accounts" placeholder="请输入邮箱地址" pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required></td>
@@ -13,13 +24,19 @@
               <td>密码:</td>
               <td><input type="password" v-model="password" placeholder="6 到 16个字符" pattern=".{6,16}" required></td>
             </tr>
+            <tr v-if="is_change_password">
+              <td>新密码:</td>
+              <td><input type="password" v-model="new_password" placeholder="6 到 16个字符" pattern=".{6,16}" required></td>
+            </tr>
           </table>
           <div class="a22">
             <button v-if="is_log_in" class="button">登陆</button>
+            <button v-if="is_log_on" class="button" style="background:#00aa00;">注册</button>
+            <button v-if="is_change_password" class="button" style="background:#2c3e50;">修改密码</button>
           </div>
         </div>
       </form>
-      <!-- <div class="mask"></div> -->
+      <div class="mask"></div>
     </div>
   </div>
 </template>
@@ -85,7 +102,6 @@ export default {
       this.$bb_api.logIn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
         if(res["data"]["state"] === 0){
           this.show = false;
-          this.$bb_link.to("/CanvasMap");
           this.$store.dispatch('isLogInA',true);
         }else{
           this.$bb.alert(res["data"]["msg"], 5000);
@@ -98,7 +114,6 @@ export default {
       this.$bb_api.logInToken().then(res=>{
         if(res["data"]["state"] === 0){
           this.show = false;
-          this.$bb_link.to("/CanvasMap");
           this.$store.dispatch('isLogInA',true);
         }else{
           this.show = true;
@@ -138,6 +153,21 @@ export default {
 
 <style lang="scss" scoped>
 .LogIn{
+  .head{
+    position:relative;
+    z-index: 9;
+    color:#fff;
+    background:#000;
+    table{
+      width:100%;
+      tr{
+        td{
+          width:30px;
+          height:20px;
+        }
+      }
+    }
+  }
   .content{
     position:fixed;
     width:100%;
@@ -145,30 +175,20 @@ export default {
     .a1{}
     .a2{
       position:absolute;
-      width: 320px;
-      height:180px;
+      width: 240px;
+      height:150px;
       z-index: 9;
       left:50%;top: 50%;
       transform: translate(-50%,-50%);
       border-radius: 5px;
-      opacity: 0.85;
-      box-shadow: 0px 2px 18px #003189;
       background:#fff;
       table.a21{
         width:90%;
+        height:60px;
         margin:5px auto;
-        caption{
-          font-size: 11px;
-          height:30px;
-          line-height: 30px;
-          font-weight: 500;
-        }
         tr{
-          td{
-            height:40px;
-          }
           input{
-            height:30px;
+            height:20px;
           }
         }
       }
@@ -180,14 +200,13 @@ export default {
         left:50%;
         transform: translate(-50%,0);
         .button{
-          width:98%;
-          height:25px;
-          line-height: 25px;
+          width:40%;
+          height:30px;
+          line-height: 30px;
           color:#fff;
           margin:10px auto;
-          border-radius: 2px;
-          border:none;
-          background:#409eff;
+          border-radius: 5px;
+          background:#00a0ff;
         }
       }
     }

@@ -36,6 +36,14 @@ const routes = [
     meta:{
         keep_alive: false,
     }
+  },
+  { //地图
+    path: '/CanvasMap',
+    name: 'CanvasMap',
+    component: () => import('../views/CanvasMap.vue'),
+    meta:{
+        keep_alive: false,
+    }
   }
 ]
 

@@ -89,7 +89,8 @@ class Api{
     //登陆
     logIn(data){
         return new Promise((resolve)=> {
-            Ajax.post('/login',data).then(res=>{
+            resolve({"data":{"state":0}});
+            /* Ajax.post('/login',data).then(res=>{
                 if(res["data"]["state"] === 0){
                     this.bb_local.createLocal("accounts",data["accounts"]);
                     this.bb_local.createLocal("token",res["data"]["token"]);
@@ -100,7 +101,7 @@ class Api{
                 resolve(res);
             }).catch(err => {
                 console.error(err);
-            });
+            }); */
         });
     }
     //token登陆

@@ -1,7 +1,13 @@
 <template>
   <div id="app">
-    <LogIn></LogIn>
-    <div v-if="is_log_in">
+    <Top></Top>
+    <LogIn v-if="!is_log_in"></LogIn>
+    <keep-alive>
+      <router-view v-if="$route.meta.keep_alive"></router-view>
+    </keep-alive>
+    <router-view v-if="!$route.meta.keep_alive"></router-view>
+    <Bottom></Bottom>
+    <!-- <div v-if="is_log_in">
       <div id="TopMenu">
         <table>
           <tr>
@@ -10,11 +16,7 @@
           </tr>
         </table>
       </div>
-      <keep-alive>
-        <router-view v-if="$route.meta.keep_alive"></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keep_alive"></router-view>
-    </div>
+    </div> -->
     <div v-if="alert" @click="closeAlert()" id="alert">
       <div class="msg">{{ alert }}</div>
       <div class="mask" style="z-index: 9999"></div>
@@ -23,11 +25,14 @@
 </template>
 <script>
 import LogIn from "@/components/LogIn.vue";
+import Top from "@/components/Top.vue";
+import Bottom from "@/components/Bottom.vue";
 
 export default {
   name: "App",
   components: {
     LogIn,
+    Top
   },
   data() {
     return {
@@ -75,6 +80,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position:relative;
 }
 #alert {
   position: relative;
