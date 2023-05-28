@@ -10,7 +10,7 @@ const routes = [
     name: 'Home',
     component: Home,
     meta:{
-        keep_alive: true,
+      keep_alive: true,
     }
   },
   {
@@ -21,10 +21,10 @@ const routes = [
         keep_alive: false,
     }
   },
-  { //视频监控
-    path: '/VideoManagement',
-    name: 'VideoManagement',
-    component: () => import('../views/VideoManagement.vue'),
+  { //登陆页面
+    path: '/LogIn',
+    name: 'LogIn',
+    component: () => import('../views/LogIn.vue'),
     meta:{
         keep_alive: false,
     }
@@ -37,14 +37,14 @@ const routes = [
         keep_alive: false,
     }
   },
-  { //地图
-    path: '/CanvasMap',
-    name: 'CanvasMap',
-    component: () => import('../views/CanvasMap.vue'),
+  { //视频监控
+    path: '/VideoManagement',
+    name: 'VideoManagement',
+    component: () => import('../views/VideoManagement.vue'),
     meta:{
         keep_alive: false,
     }
-  }
+  },
 ]
 
 const router = new VueRouter({

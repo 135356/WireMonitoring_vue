@@ -1,6 +1,6 @@
 <template>
     <div id="Bottom">
-        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+        版权所有**********
     </div>
 </template>
 <script>
@@ -19,5 +19,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    #Bottom{}
+    #Bottom{
+        text-align: center;
+        color:#ccc;
+    }
 </style>

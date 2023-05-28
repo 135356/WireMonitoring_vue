@@ -1,7 +1,7 @@
 <template>
-  <div class="LogIn">
-    <div class="content" v-if="show">
-      <form @submit.prevent="isMethod()">
+  <div class="log_in">
+    <div class="content">
+      <form @submit.prevent="logIn()">
         <div class="a2">
           <table class="a21">
             <caption>用户登陆</caption>
@@ -15,7 +15,7 @@
             </tr>
           </table>
           <div class="a22">
-            <button v-if="is_log_in" class="button">登陆</button>
+            <button class="button">登陆</button>
           </div>
         </div>
       </form>
@@ -26,66 +26,20 @@
 
 <script>
 export default {
-  name: "LogIn",
+  name: "log_in",
   data() {
     return {
-      show:true,
-      is_change_password:false,
-      is_log_on:false,
-      is_log_in:true,
       accounts:"",
       password:"",
       new_password:"",
     }
   },
   methods: {
-    //切换界面为注册
-    isLogOn(){
-      this.show = true;
-      this.is_change_password = false;
-      this.is_log_on = true;
-      this.is_log_in = false;
-    },
-    //切换界面为修改密码
-    isChangePassword(){
-      this.show = true;
-      this.is_change_password = true;
-      this.is_log_on = false;
-      this.is_log_in = false;
-    },
-    //切换界面为登陆界面
-    isLogIn(){
-      this.show = true;
-      this.is_change_password = false;
-      this.is_log_on = false;
-      this.is_log_in = true;
-    },
-    isMethod(){
-      if(this.is_log_on){
-        this.logOn();
-      }else if(this.is_log_in){
-        this.logIn();
-      }else if(this.is_change_password){
-        this.changePassword();
-      }
-    },
-    //注册
-    logOn(){
-      this.$bb_api.logOn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
-        if(res["data"]["state"] === 0){
-          this.show = true;
-          this.$bb.alert('注册成功请登陆', 5000);
-        }else{
-          this.$bb.alert(res["data"]["msg"], 5000);
-        }
-      });
-    },
     //登陆
     logIn(){
       this.$bb_api.logIn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
         if(res["data"]["state"] === 0){
-          this.show = false;
-          this.$bb_link.to("/CanvasMap");
+          this.$bb_link.to("/");
           this.$store.dispatch('isLogInA',true);
         }else{
           this.$bb.alert(res["data"]["msg"], 5000);
@@ -97,37 +51,20 @@ export default {
     logInToken(){
       this.$bb_api.logInToken().then(res=>{
         if(res["data"]["state"] === 0){
-          this.show = false;
-          this.$bb_link.to("/CanvasMap");
+          this.$bb_link.to("/");
           this.$store.dispatch('isLogInA',true);
         }else{
-          this.show = true;
-          this.is_change_password = false;
-          this.is_log_on = false;
-          this.is_log_in = true;
-          if(res["data"]["state"] !== -1000){
+          /* if(res["data"]["state"] !== -1000){
             this.$bb.alert(res["data"]["msg"], 5000);
-          }
+          } */
           this.$store.dispatch('isLogInA',false);
         }
       });
     },
     //登出
     logOut(){
-      this.show = true;
       this.$store.dispatch('isLogInA',false);
       this.$bb_api.logOut({'accounts':this.accounts});
-    },
-    //修改密码
-    changePassword(){
-      this.$bb_api.changePassword({'accounts':this.accounts,'password':this.$bb_md5(this.password),'new_password':this.$bb_md5(this.new_password)}).then(res=>{
-        if(res["data"]["state"] === 0){
-          this.show = true;
-          this.$bb.alert('修改成功请登陆', 5000);
-        }else{
-          this.$bb.alert(res["data"]["msg"], 5000);
-        }
-      });
     },
   },
   mounted() {
@@ -137,7 +74,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.LogIn{
+.log_in{
+  width: 100%;
+  height:100%;
+  background-image:url('@/assets/img/longInBackgrund.jpg');
+  background-repeat:no-repeat;
+  background-size:100% 100%;
   .content{
     position:fixed;
     width:100%;

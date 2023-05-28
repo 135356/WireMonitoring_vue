@@ -1,12 +1,9 @@
 <template>
   <div id="app">
-    <Top></Top>
-    <LogIn v-if="!is_log_in"></LogIn>
     <keep-alive>
       <router-view v-if="$route.meta.keep_alive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keep_alive"></router-view>
-    <Bottom></Bottom>
     <!-- <div v-if="is_log_in">
       <div id="TopMenu">
         <table>
@@ -24,16 +21,9 @@
   </div>
 </template>
 <script>
-import LogIn from "@/components/LogIn.vue";
-import Top from "@/components/Top.vue";
-import Bottom from "@/components/Bottom.vue";
-
 export default {
   name: "App",
-  components: {
-    LogIn,
-    Top
-  },
+  components: {},
   data() {
     return {
       is_video_management: false,
@@ -46,6 +36,7 @@ export default {
     alert() {
       return this.$store.state.data_api.alert;
     },
+    //登陆状态
     is_log_in() {
       return this.$store.state.data_api.is_log_in;
     },
@@ -75,6 +66,8 @@ export default {
 </style>
 <style lang="scss" scoped>
 #app {
+  width:100vw;
+  height:100vh;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

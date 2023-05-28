@@ -1,6 +1,6 @@
 <template>
   <div id="CanvasMap">
-    <canvas id="container"></canvas>
+    <div class="a1"><canvas id="container"></canvas></div>
   </div>
 </template>
 
@@ -17,8 +17,8 @@ export default {
   created(){},
   mounted(){
     let canvas = document.querySelector('#container')
-    let canvasW = canvas.width = window.innerWidth
-    let canvasH = canvas.height = window.innerHeight
+    let canvasW = canvas.width = canvas.clientWidth;
+    let canvasH = canvas.height = canvas.clientHeight;
     let geoCenterX = 0, geoCenterY = 0  // 地图区域的经纬度中心点
     let scale = 1   // 地图缩放系数
     let geoData = []
@@ -174,13 +174,13 @@ export default {
     
     // 滚轮缩放事件
     canvas.addEventListener('mousewheel', function (event) {
-        if (event.deltaY > 0) {
+        /* if (event.deltaY > 0) {
             if (scale > 10) {
                 scale -= 10
             }
         } else {
             scale += 10
-        }
+        } */
         eventType = 'mousewheel'
         drawMap()
     })
@@ -207,20 +207,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-* {
-    margin: 0;
-    padding: 0;
+#CanvasMap{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background:#000;
+    .a1{
+        position: absolute;
+        top:35px;
+        width: 80%;
+        height: 80%;
+    }
 }
- 
-html,
-body {
-    width: 100%;
-    height: 100%;
-}
- 
-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
+#container{
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
 </style>
