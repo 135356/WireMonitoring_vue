@@ -87,8 +87,8 @@ export default {
     .a1{}
     .a2{
       position:absolute;
-      width: 320px;
-      height:180px;
+      width: 280px;
+      height:150px;
       z-index: 9;
       left:50%;top: 50%;
       transform: translate(-50%,-50%);
@@ -98,19 +98,28 @@ export default {
       background:#fff;
       table.a21{
         width:90%;
+        font-size:10px;
         margin:5px auto;
         caption{
-          font-size: 11px;
+          font-size: 12px;
           height:30px;
           line-height: 30px;
           font-weight: 500;
         }
         tr{
           td{
-            height:40px;
+            height:35px;
           }
-          input{
-            height:30px;
+          td:nth-child(1){
+            width:35px;
+          }
+          td:nth-child(2){
+            input{
+              width:95%;
+              height:26px;
+              padding-left:2px;
+              font-size:6px;
+            }
           }
         }
       }
@@ -118,7 +127,7 @@ export default {
         position:absolute;
         width:90%;
         height:40px;
-        bottom:15px;
+        bottom:8px;
         left:50%;
         transform: translate(-50%,0);
         .button{

@@ -1,6 +1,12 @@
 <template>
     <div class="ConstructionManagement">
-        <Top></Top>
+        <Top>
+            <table>
+                <tr>
+                    <td @click="$bb_link.to('Home')">工程概览</td>
+                </tr>
+            </table>
+        </Top>
         <div class="a1">
             <div class="leftMenu">
                 <table>
@@ -8,7 +14,7 @@
                         <td>
                             <div @click="scheduleF()">进度管理</div>
                             <ul v-show="schedule_show">
-                                <li @click.stop="ScheduleManagementF()">进度管理</li>
+                                <li :class="{'hover':ScheduleManagement_show}" @click.stop="ScheduleManagementF()">进度管理</li>
                             </ul>
                         </td>
                     </tr>
@@ -16,8 +22,8 @@
                         <td>
                             <div @click="safetyF()">安全管理</div>
                             <ul v-show="safety_show">
-                                <li @click.stop="RiskManagementF()">风险管控</li>
-                                <li @click.stop="RiskReportingF()">安全风险上报</li>
+                                <li :class="{'hover':RiskManagement_show}" @click.stop="RiskManagementF()">风险管控</li>
+                                <li :class="{'hover':RiskReporting_show}" @click.stop="RiskReportingF()">安全风险上报</li>
                             </ul>
                         </td>
                     </tr>
@@ -53,10 +59,10 @@ export default {
   },
   data() {
     return {
-        schedule_show:false,
+        schedule_show:true,
         safety_show:false,
         device_show:false,
-        ScheduleManagement_show:false, //进度管理
+        ScheduleManagement_show:true, //进度管理
         RiskManagement_show:false, //风险管控
         RiskReporting_show:false, //风险上报
     };
@@ -115,15 +121,15 @@ export default {
     width:100%;
     height:100%;
     overflow: scroll;
-    font-size: 6px;
-    font-weight: 300;
     background:rgb(5,15,42);
     .a1{
         width:100%;
         height:100%;
         position: absolute;
-        top:40px;left:50%;
+        top:30px;left:50%;
         transform: translate(-50%,0);
+        font-size: 6px;
+        font-weight: 300;
         background: rgba(4,10,29,0.3);
         .leftMenu{
             position: absolute;
@@ -153,6 +159,9 @@ export default {
                                 background:rgba(20, 69, 100,0.8);
                             }
                             li:hover{
+                                background:rgb(39, 65, 145);
+                            }
+                            li.hover{
                                 background:rgb(33, 59, 139);
                             }
                         }

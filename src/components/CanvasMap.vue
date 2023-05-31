@@ -208,15 +208,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 #CanvasMap{
+    position: relative;
     width: 100vw;
     height: 100vh;
-    position: relative;
     background:#000;
     .a1{
         position: absolute;
-        top:35px;
-        width: 80%;
-        height: 80%;
+        top:50px;
+        width: 60%;
+        height: 60%;
     }
 }
 #container{

@@ -1,3 +1,4 @@
+@import '../font/iconfont.css';
 /*解决在app内长按复制*/
 *:not(input):not(textarea){
     -webkit-touch-callout:none; /*系统默认菜单被禁用*/

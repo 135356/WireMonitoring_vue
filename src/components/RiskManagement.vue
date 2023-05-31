@@ -5,17 +5,17 @@
             <table>
                 <tr>
                     <td>
-                        <i></i>
-                        片区风险
+                        <i class="iconfont">&#xe62e;</i>
+                        <p>风险管控</p>
                     </td>
-                    <td>
+                    <!-- <td>
                         <i></i>
                         风险统计
                     </td>
                     <td>
                         <i></i>
                         风险处理比例
-                    </td>
+                    </td> -->
                 </tr>
             </table>
         </div>
@@ -77,17 +77,34 @@ destroyed() {},
     .c1{
         padding:10px 0;
         border:solid 4px #ddd;
-        td{
-            height:30px;
-            line-height: 30px;
-            color:#353333;
-            i{
-                width:50px;
-                height:20px;
-                padding:5px;
-                margin: 5px;
-                border-radius: 20px;
-                background:rgb(13, 140, 115);
+        table{
+            width:95%;
+            margin:auto;
+            text-align:left;
+            tr{
+                td{
+                    height:20px;
+                    line-height: 20px;
+                    color:#353333;
+                    display:flex;
+                    i{
+                        width:10px;
+                        height:5px;
+                        line-height: 5px;
+                        align-self:center;
+                        display: inline-block;
+                        padding:5px;
+                        margin: 5px;
+                        border-radius: 2px;
+                        font-size:12px;
+                        color:#fff;
+                        text-align: center;
+                        background:rgb(13, 140, 115);
+                    }
+                    p{
+                        align-self:center;
+                    }
+                }
             }
         }
     }
