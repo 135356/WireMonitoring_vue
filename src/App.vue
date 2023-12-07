@@ -4,16 +4,6 @@
       <router-view v-if="$route.meta.keep_alive"></router-view>
     </keep-alive>
     <router-view v-if="!$route.meta.keep_alive"></router-view>
-    <!-- <div v-if="is_log_in">
-      <div id="TopMenu">
-        <table>
-          <tr>
-            <td @click="$bb_link.to('/ConstructionManagement')">盾构施工管理</td>
-            <td @click="$bb_link.to('/VideoManagement')">视频监控</td>
-          </tr>
-        </table>
-      </div>
-    </div> -->
     <div v-if="alert" @click="closeAlert()" id="alert">
       <div class="msg">{{ alert }}</div>
       <div class="mask" style="z-index: 9999"></div>
@@ -25,34 +15,19 @@ export default {
   name: "App",
   components: {},
   data() {
-    return {
-      is_video_management: false,
-      is_construction_management: false,
-    };
+    return {};
   },
   watch: {},
   computed: {
     /*监听弹框*/
     alert() {
       return this.$store.state.data_api.alert;
-    },
-    //登陆状态
-    is_log_in() {
-      return this.$store.state.data_api.is_log_in;
-    },
+    }
   },
   methods: {
     /*关闭弹框*/
     closeAlert() {
       this.$store.dispatch("alertA", "");
-    },
-    is_videoManagement() {
-      this.is_video_management = true;
-      this.is_construction_management = false;
-    },
-    is_constructionManagement() {
-      this.is_video_management = false;
-      this.is_construction_management = true;
     },
   },
   created() {

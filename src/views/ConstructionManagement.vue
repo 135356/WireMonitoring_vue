@@ -27,12 +27,12 @@
                             </ul>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <td>
                             <div @click="deviceF()">设备管理</div>
                             <ul v-show="device_show"></ul>
                         </td>
-                    </tr>
+                    </tr> -->
                 </table>
             </div>
             <div class="content">

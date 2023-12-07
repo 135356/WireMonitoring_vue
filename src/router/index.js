@@ -11,14 +11,7 @@ const routes = [
     component: Home,
     meta:{
       keep_alive: true,
-    }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-    meta:{
-        keep_alive: false,
+      is_lonin:true,
     }
   },
   { //登陆页面
@@ -35,6 +28,7 @@ const routes = [
     component: () => import('../views/ConstructionManagement.vue'),
     meta:{
         keep_alive: false,
+        is_lonin:true,
     }
   },
   { //视频监控
@@ -43,12 +37,15 @@ const routes = [
     component: () => import('../views/VideoManagement.vue'),
     meta:{
         keep_alive: false,
+        is_lonin:true,
     }
   },
 ]
 
 const router = new VueRouter({
   routes
-})
+});
+
+
 
 export default router

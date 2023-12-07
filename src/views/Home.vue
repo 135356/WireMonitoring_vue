@@ -245,7 +245,7 @@ export default {
       .aaaa{
         position: absolute;
         left:0;top:0;
-        width:80px;
+        min-width:80px;
         p{
           height:20px;
           line-height: 20px;
@@ -286,7 +286,7 @@ export default {
         .aaaa1_left{
           position: absolute;
           left:0;top:25px;
-          width:70px;
+          min-width:70px;
           height:22px;
           color:#99daea;
           text-align: center;
@@ -308,7 +308,7 @@ export default {
         .aaaa1_right{
           position: absolute;
           left:80px;top:25px;
-          width:70px;
+          min-width:70px;
           height:22px;
           color:#99daea;
           text-align: center;

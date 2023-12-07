@@ -39,9 +39,9 @@ export default {
         },
         isLogInA({commit}, data) {
             return new Promise((resolve)=>{
-                //commit('isLogInM', data);
+                commit('isLogInM', data);
                 resolve(1);
             });
-        }
+        },
     }
 }

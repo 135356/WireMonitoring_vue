@@ -16,7 +16,7 @@
         <div class="c3">
             <table>
                 <tr>
-                    <th><i></i></th>
+                    <!-- <th></th> -->
                     <th>所属片区</th>
                     <th>项目名称</th>
                     <th>运行状态</th>
@@ -25,21 +25,29 @@
                     <th>填报时间</th>
                     <th>负责部门</th>
                     <th>负责人</th>
-                    <th>操作</th>
+                    <!-- <th>操作</th> -->
                 </tr>
-                <tr>
-                    <td><i></i></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button>编辑</button><button>查看</button></td>
+                <tr v-for="(v,i) in info">
+                    <!-- <td></td> -->
+                    <td>{{ v.area }}</td>
+                    <td>{{ v.name }}</td>
+                    <td>
+                        <div v-if="v.state == 0">错误</div>
+                        <div v-if="v.state == 1">正常</div>
+                    </td>
+                    <td>{{ v.report_person }}</td>
+                    <td>{{ v.report_phone }}</td>
+                    <td>{{ v.created_at }}</td>
+                    <td>{{ v.undertake_department }}</td>
+                    <td>{{ v.undertake_person }}</td>
+                    <!-- <td><button>查看</button></td> -->
                 </tr>
             </table>
+        </div>
+        <div class="page">
+            <span @click="pageF(-1)">上一页</span>
+            <!-- <span v-for="v in page['total']" @click="pageF(v)">{{ v }}</span> -->
+            <span @click="pageF(-2)">下一页</span>
         </div>
     </div>
 </template>
@@ -49,13 +57,43 @@ export default {
 name: "ScheduleManagement",
 components: {},
 data() {
-    return {};
+    return {
+        info:'', //数据
+        page:{}, //翻页信息
+    };
 },
 watch: {},
 computed: {},
-methods: {},
+methods: {
+    pageF(v){
+        let s_data = {'page_type':'0','page':'0','id':0};
+        if(v == -1){ //上一页
+            s_data = {'id':this.info[0]['id'],'page_type':'-1'};
+        }else if(v == -2){ //下一页
+            s_data = {'id':this.info[this.info.length-1]['id'],'page_type':'1'};
+        }else{
+            s_data = {'page':v,'page_type':'0'};
+        }
+        this.$bb_api.riskList(s_data).then(res=>{
+            if(res.data["state"] === 0){
+                this.info = res.data['cont']['data'];
+            }else{
+                this.$bb.alert("已经到底线的", 5000);
+            }
+        });
+    }
+},
 created(){},
-mounted(){},
+mounted(){
+    this.$bb_api.riskList({'page':1,'id':0,'page_type':'0'}).then(res=>{
+        if(res.data["state"] === 0){
+            this.info = res.data['cont']['data'];
+            this.page = res.data['cont']['page'];
+        }else{
+            this.$bb.alert("没有找到数据", 5000);
+        }
+    });
+},
 destroyed() {},
 };
 </script>
@@ -97,6 +135,8 @@ destroyed() {},
     }
     .c2{}
     .c3{
+        width:100%;
+        Overflow:scroll;
         table{
             margin: auto;
             tr{
@@ -115,8 +155,7 @@ destroyed() {},
                 }
                 td{
                     min-width:50px;
-                    height:15px;
-                    line-height:15px;
+                    height:20px;
                     border:solid 1px #eee;
                     i{
                         width: 5px;
@@ -137,7 +176,7 @@ destroyed() {},
                 th:nth-child(8){}
                 th:nth-child(9){}
                 th:nth-child(10){
-                    width:50px;
+                    min-width: 90px;
                 }
                 td:nth-child(10){
                     button{
@@ -152,6 +191,15 @@ destroyed() {},
                     }
                 }
             }
+        }
+    }
+    .page{
+        text-align: left;
+        height: 20px;
+        margin: 5px 0 0 10px;
+        span{
+            padding: 5px;
+            display: inline-block;
         }
     }
 }

@@ -7,11 +7,14 @@
             <caption>用户登陆</caption>
             <tr>
               <td>帐号:</td>
-              <td><input type="text" v-model="accounts" placeholder="请输入邮箱地址" pattern="^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$" required></td>
+              <td><input type="text" v-model="accounts" placeholder="字母开头5 到 16位字符" pattern="\w{5,16}" required></td>
             </tr>
             <tr>
               <td>密码:</td>
-              <td><input type="password" v-model="password" placeholder="6 到 16个字符" pattern=".{6,16}" required></td>
+              <td>
+                <input type="password" v-model="password" placeholder="6 到 16个字符" pattern=".{6,16}" required>
+                <!-- <input type="password" v-model="new_password" placeholder="6 到 16个字符" pattern=".{6,16}" required> -->
+              </td>
             </tr>
           </table>
           <div class="a22">
@@ -35,6 +38,28 @@ export default {
     }
   },
   methods: {
+    //修改密码
+    changePassword(){
+      this.$bb_api.changePassword({'accounts':this.accounts,'password':this.$bb_md5(this.password),'new_password':this.$bb_md5(this.new_password)}).then(res=>{
+        if(res["data"]["state"] === 0){
+          this.show = true;
+          this.$bb.alert('修改成功请登陆', 5000);
+        }else{
+          this.$bb.alert(res["data"]["msg"], 5000);
+        }
+      });
+    },
+    //注册
+    logOn(){
+      this.$bb_api.logOn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
+        if(res["data"]["state"] === 0){
+          this.show = true;
+          this.$bb.alert('注册成功请登陆', 5000);
+        }else{
+          this.$bb.alert(res["data"]["msg"], 5000);
+        }
+      });
+    },
     //登陆
     logIn(){
       this.$bb_api.logIn({'accounts':this.accounts,'password':this.$bb_md5(this.password)}).then(res=>{
@@ -47,29 +72,13 @@ export default {
         }
       });
     },
-    //token登陆
-    logInToken(){
-      this.$bb_api.logInToken().then(res=>{
-        if(res["data"]["state"] === 0){
-          this.$bb_link.to("/");
-          this.$store.dispatch('isLogInA',true);
-        }else{
-          /* if(res["data"]["state"] !== -1000){
-            this.$bb.alert(res["data"]["msg"], 5000);
-          } */
-          this.$store.dispatch('isLogInA',false);
-        }
-      });
-    },
     //登出
     logOut(){
       this.$store.dispatch('isLogInA',false);
       this.$bb_api.logOut({'accounts':this.accounts});
     },
   },
-  mounted() {
-    this.logInToken();
-  }
+  mounted() {}
 }
 </script>
 
